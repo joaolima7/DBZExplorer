@@ -1,7 +1,7 @@
+import 'package:dbz_app/layers/core/utils/consts/interface_contents_consts.dart';
 import 'package:dbz_app/layers/presentation/ui/components/text_custom.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dbz_app/layers/presentation/ui/pages/character/character_result_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key});
@@ -11,16 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> _contentsTitle = [
-    'Personagens',
-    'Planetas',
-  ];
-
-  Map<String, dynamic> _contentsTrailing = {
-    'Personagens': 'assets/images/Goku_logo.png',
-    'Planetas': 'assets/images/planets.png'
-  };
-
   @override
   Widget build(BuildContext context) {
     var sizeScreen = MediaQuery.of(context).size;
@@ -41,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Positioned(
                         top: 0,
-                        bottom: 135,
+                        bottom: 125,
                         child: Image.asset(
                           'assets/images/Goku_logo.png',
                           width: 100,
@@ -50,7 +40,11 @@ class _HomePageState extends State<HomePage> {
                       Image.asset('assets/images/dbz_logo.png'),
                       Positioned(
                         bottom: 30,
-                        child: TextCustom(txt: 'Explorer', color: Colors.amber),
+                        child: TextCustom(
+                          txt: 'Explorer',
+                          color: Colors.amber,
+                          sizeWidth: sizeScreen.width,
+                        ),
                       )
                     ],
                   ),
@@ -59,16 +53,29 @@ class _HomePageState extends State<HomePage> {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: _contentsTitle.length,
+                itemCount: contentsTitle.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 5),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Card(
                       color: Colors.amber[100],
                       child: ListTile(
-                        trailing: Image.asset(
-                            _contentsTrailing[_contentsTitle[index]]),
-                        title: Text(_contentsTitle[index]),
+                        onTap: () {
+                          if (index == 0) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CharacterResultPage()));
+                          }
+                        },
+                        trailing:
+                            Image.asset(contentsTrailing[contentsTitle[index]]),
+                        title: TextCustom(
+                          txt: contentsTitle[index],
+                          color: Colors.black,
+                          sizeWidth: sizeScreen.width / 2,
+                        ),
                       ),
                     ),
                   );
