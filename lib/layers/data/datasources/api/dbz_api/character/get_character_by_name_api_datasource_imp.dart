@@ -12,7 +12,7 @@ class GetCharacterByNameApiDataSourceImp
   Future<List<CharacterEntity>> call(String name) async {
     try {
       final response = await http
-          .get(Uri.parse('${URL_BASE}characters?limit=1000&name=${name}'));
+          .get(Uri.parse('${URL_BASE}characters?limit=1000&name=$name'));
 
       if (response.statusCode == 200) {
         List<dynamic> json = jsonDecode(response.body);

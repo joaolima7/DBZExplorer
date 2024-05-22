@@ -1,7 +1,5 @@
-import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/presentation/controllers/character_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
-import 'package:dbz_app/layers/presentation/ui/components/text_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
