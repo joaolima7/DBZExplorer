@@ -1,3 +1,4 @@
+import 'package:dbz_app/layers/presentation/ui/components/text_field_custom.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {
@@ -10,8 +11,12 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Search'),
+    var sizeScreen = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: TextFielCustom(),
+      ),
     );
   }
 }

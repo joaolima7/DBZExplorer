@@ -12,10 +12,10 @@ class CharacterController {
   );
 
   Future<List<CharacterEntity>> getAllCharacters() async {
-    return _getCharactersAllUseCase();
+    return await _getCharactersAllUseCase();
   }
 
   Future<List<CharacterEntity>> getCharactersByName(String name) async {
-    return _getCharactersByNameUseCase(name);
+    return await _getCharactersByNameUseCase(name);
   }
 }

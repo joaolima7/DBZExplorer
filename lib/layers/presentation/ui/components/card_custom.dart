@@ -1,4 +1,5 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
+import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 import 'package:flutter/material.dart';
 
 class CardCustom extends StatelessWidget {
@@ -21,12 +22,11 @@ class CardCustom extends StatelessWidget {
       imageUrl = item.image;
       name = item.name;
       number = '#${item.id}';
+    } else if (item is PlanetEntity) {
+      imageUrl = item.image;
+      name = item.name;
+      number = '#${item.id}';
     }
-    // else if (item is PlanetEntity) {
-    //   imageUrl = item.image;
-    //   name = item.name;
-    //   number = '#${item.id}';
-    // }
 
     return InkWell(
       onTap: function,

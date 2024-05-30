@@ -13,9 +13,10 @@ class GetPlanetsAllApiDataSourceImp implements GetPlanetsAllDataSource {
           await http.get(Uri.parse('${URL_BASE}planets?limit=1000'));
 
       if (response.statusCode == 200) {
-        List<dynamic> json = jsonDecode(response.body);
+        Map<String, dynamic> json = jsonDecode(response.body);
+        List<dynamic> items = json['items'];
         return List<PlanetEntity>.from(
-            json.map((e) => PlanetDto.fromJson(e)).toList());
+            items.map((e) => PlanetDto.fromJson(e)).toList());
       } else {
         throw Exception('Falha ao carregar personagem!');
       }
