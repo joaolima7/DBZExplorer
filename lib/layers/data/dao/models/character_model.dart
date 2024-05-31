@@ -23,4 +23,28 @@ class CharacterModel extends CharacterEntity {
           description: description,
           image: image,
         );
+
+  CharacterEntity toEntity() {
+    return CharacterEntity(
+      id: id,
+      name: name,
+      ki: ki,
+      race: race,
+      gender: gender,
+      description: description,
+      image: image,
+    );
+  }
+
+  factory CharacterModel.fromEntity(CharacterEntity entity) {
+    return CharacterModel(
+      id: entity.id,
+      name: entity.name,
+      ki: entity.ki,
+      race: entity.race,
+      gender: entity.gender,
+      description: entity.description,
+      image: entity.image,
+    );
+  }
 }

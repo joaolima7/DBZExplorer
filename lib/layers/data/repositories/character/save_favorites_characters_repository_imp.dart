@@ -1,4 +1,5 @@
 import 'package:dbz_app/layers/data/datasources/character_datasource/save_favorites_characters_datasource.dart';
+import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/repositories/character/save_favorites_characters_repository.dart';
 
 class SaveFavoritesCharactersRepositoryImp
@@ -7,7 +8,7 @@ class SaveFavoritesCharactersRepositoryImp
   SaveFavoritesCharactersRepositoryImp(this._saveFavoritesCharactersDataSource);
 
   @override
-  Future<void> call() async {
-    _saveFavoritesCharactersDataSource;
+  Future<void> call(CharacterEntity character) async {
+    _saveFavoritesCharactersDataSource(character);
   }
 }
