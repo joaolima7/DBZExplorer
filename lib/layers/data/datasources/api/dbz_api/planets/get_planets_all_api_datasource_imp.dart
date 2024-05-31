@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:dbz_app/layers/core/utils/consts/dbz_api_const.dart';
-import 'package:dbz_app/layers/data/datasources/planets/get_planets_all_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_all_datasource.dart';
 import 'package:dbz_app/layers/data/dtos/planet_dto.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 

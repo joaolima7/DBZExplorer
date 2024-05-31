@@ -4,8 +4,8 @@ import 'package:dbz_app/layers/data/datasources/api/dbz_api/planets/get_planets_
 import 'package:dbz_app/layers/data/datasources/api/dbz_api/planets/get_planets_by_name_api_datasource_imp.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/get_character_all_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/get_character_by_name_datasource.dart';
-import 'package:dbz_app/layers/data/datasources/planets/get_planets_all_datasource.dart';
-import 'package:dbz_app/layers/data/datasources/planets/get_planets_by_name_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_all_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_by_name_datasource.dart';
 import 'package:dbz_app/layers/data/repositories/character/get_character_all_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/character/get_character_by_name_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/planets/get_planets_all_repository_imp.dart';
@@ -24,6 +24,7 @@ import 'package:dbz_app/layers/domain/usecases/planets/get_planets_by_name_useca
 import 'package:dbz_app/layers/domain/usecases/planets/get_planets_by_name_usecase/get_planets_by_name_usecase_imp.dart';
 import 'package:dbz_app/layers/presentation/controllers/character_controller.dart';
 import 'package:dbz_app/layers/presentation/controllers/planets_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/searching_controller.dart';
 import 'package:get_it/get_it.dart';
 
 class Inject {
@@ -76,6 +77,11 @@ class Inject {
         ));
 
     getIt.registerFactory<PlanetsController>(() => PlanetsController(
+          getIt(),
+          getIt(),
+        ));
+
+    getIt.registerFactory<SearchingController>(() => SearchingController(
           getIt(),
           getIt(),
         ));

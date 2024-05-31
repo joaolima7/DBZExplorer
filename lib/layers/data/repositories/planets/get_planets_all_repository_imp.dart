@@ -1,4 +1,4 @@
-import 'package:dbz_app/layers/data/datasources/planets/get_planets_all_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_all_datasource.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 import 'package:dbz_app/layers/domain/repositories/planets/get_planets_all_repository.dart';
 
