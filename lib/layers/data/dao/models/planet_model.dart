@@ -1,9 +1,9 @@
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 import 'package:floor/floor.dart';
 
-@Entity(tableName: 'planets')
+//@Entity(tableName: 'planets')
 class PlanetModel extends PlanetEntity {
-  @PrimaryKey(autoGenerate: true)
+  //@PrimaryKey(autoGenerate: true)
   final int id;
 
   PlanetModel({

@@ -98,9 +98,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `characters` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` INTEGER NOT NULL, `name` TEXT NOT NULL, `ki` TEXT NOT NULL, `race` TEXT NOT NULL, `gender` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `characters` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `ki` TEXT NOT NULL, `race` TEXT NOT NULL, `gender` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `planets` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` INTEGER NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `planets` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -124,11 +124,10 @@ class _$CharacterDao extends CharacterDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _characterModelInsertionAdapter = InsertionAdapter(
+        _characterEntityInsertionAdapter = InsertionAdapter(
             database,
             'characters',
-            (CharacterModel item) => <String, Object?>{
-                  'id': item.id,
+            (CharacterEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'ki': item.ki,
@@ -137,12 +136,11 @@ class _$CharacterDao extends CharacterDao {
                   'description': item.description,
                   'image': item.image
                 }),
-        _characterModelDeletionAdapter = DeletionAdapter(
+        _characterEntityDeletionAdapter = DeletionAdapter(
             database,
             'characters',
             ['id'],
-            (CharacterModel item) => <String, Object?>{
-                  'id': item.id,
+            (CharacterEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'ki': item.ki,
@@ -158,14 +156,14 @@ class _$CharacterDao extends CharacterDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<CharacterModel> _characterModelInsertionAdapter;
+  final InsertionAdapter<CharacterEntity> _characterEntityInsertionAdapter;
 
-  final DeletionAdapter<CharacterModel> _characterModelDeletionAdapter;
+  final DeletionAdapter<CharacterEntity> _characterEntityDeletionAdapter;
 
   @override
-  Future<List<CharacterModel>> getAllCharacters() async {
-    return _queryAdapter.queryList('SELECT * FROM CHARACTERENTITY',
-        mapper: (Map<String, Object?> row) => CharacterModel(
+  Future<List<CharacterEntity>> getAllCharacters() async {
+    return _queryAdapter.queryList('SELECT * FROM characters',
+        mapper: (Map<String, Object?> row) => CharacterEntity(
             id: row['id'] as int,
             name: row['name'] as String,
             ki: row['ki'] as String,
@@ -176,14 +174,14 @@ class _$CharacterDao extends CharacterDao {
   }
 
   @override
-  Future<void> addCharacter(CharacterModel character) async {
-    await _characterModelInsertionAdapter.insert(
+  Future<void> addCharacter(CharacterEntity character) async {
+    await _characterEntityInsertionAdapter.insert(
         character, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> removeCharacter(CharacterModel character) async {
-    await _characterModelDeletionAdapter.delete(character);
+  Future<void> removeCharacter(CharacterEntity character) async {
+    await _characterEntityDeletionAdapter.delete(character);
   }
 }
 
@@ -192,22 +190,20 @@ class _$PlanetDao extends PlanetDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _planetModelInsertionAdapter = InsertionAdapter(
+        _planetEntityInsertionAdapter = InsertionAdapter(
             database,
             'planets',
-            (PlanetModel item) => <String, Object?>{
-                  'id': item.id,
+            (PlanetEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'description': item.description,
                   'image': item.image
                 }),
-        _planetModelDeletionAdapter = DeletionAdapter(
+        _planetEntityDeletionAdapter = DeletionAdapter(
             database,
             'planets',
             ['id'],
-            (PlanetModel item) => <String, Object?>{
-                  'id': item.id,
+            (PlanetEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
                   'description': item.description,
@@ -220,14 +216,14 @@ class _$PlanetDao extends PlanetDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<PlanetModel> _planetModelInsertionAdapter;
+  final InsertionAdapter<PlanetEntity> _planetEntityInsertionAdapter;
 
-  final DeletionAdapter<PlanetModel> _planetModelDeletionAdapter;
+  final DeletionAdapter<PlanetEntity> _planetEntityDeletionAdapter;
 
   @override
-  Future<List<PlanetModel>> getAllPlanets() async {
+  Future<List<PlanetEntity>> getAllPlanets() async {
     return _queryAdapter.queryList('SELECT * FROM planets',
-        mapper: (Map<String, Object?> row) => PlanetModel(
+        mapper: (Map<String, Object?> row) => PlanetEntity(
             id: row['id'] as int,
             name: row['name'] as String,
             description: row['description'] as String,
@@ -235,13 +231,13 @@ class _$PlanetDao extends PlanetDao {
   }
 
   @override
-  Future<void> addPlanets(PlanetModel planet) async {
-    await _planetModelInsertionAdapter.insert(
+  Future<void> addPlanets(PlanetEntity planet) async {
+    await _planetEntityInsertionAdapter.insert(
         planet, OnConflictStrategy.replace);
   }
 
   @override
-  Future<void> removePlanet(PlanetModel planet) async {
-    await _planetModelDeletionAdapter.delete(planet);
+  Future<void> removePlanet(PlanetEntity planet) async {
+    await _planetEntityDeletionAdapter.delete(planet);
   }
 }

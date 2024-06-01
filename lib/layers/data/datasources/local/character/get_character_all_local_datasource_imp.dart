@@ -1,9 +1,12 @@
 import 'package:dbz_app/layers/data/dao/character_dao.dart';
 import 'package:dbz_app/layers/data/dao/database.dart';
+import 'package:dbz_app/layers/data/dao/models/character_model.dart';
+import 'package:dbz_app/layers/data/datasources/character_datasource/get_all_characters_saveds_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/get_character_all_datasource.dart';
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 
-class GetCharacterAllLocalDataSourceImp implements GetCharacterAllDataSource {
+class GetAllLocalCharactersSavedsDataSource
+    implements GetAllCharactersSavedsDataSource {
   @override
   Future<List<CharacterEntity>> call() async {
     try {

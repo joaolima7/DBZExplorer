@@ -1,5 +1,7 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
+import 'package:dbz_app/layers/presentation/controllers/character_dao_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class CharacterDatailsPage extends StatelessWidget {
   final CharacterEntity character;
@@ -11,6 +13,8 @@ class CharacterDatailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CharacterDaoController characterDaoController =
+        GetIt.I.get<CharacterDaoController>();
     var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -24,6 +28,14 @@ class CharacterDatailsPage extends StatelessWidget {
             fontSize: sizeScreen.width / 1.8 * .1,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              characterDaoController.saveCharacterFavorite(character);
+            },
+            icon: Icon(Icons.bookmark_add_outlined),
+          ),
+        ],
       ),
       body: Stack(
         children: [

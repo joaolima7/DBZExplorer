@@ -55,24 +55,25 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Container(
           height: sizeScreen.width * .1,
           child: TextField(
             controller: _searchTextController,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               hintText: 'Pesquisar...',
-              hintStyle: TextStyle(color: Colors.white54),
+              hintStyle: const TextStyle(color: Colors.white54),
               filled: true,
               fillColor: Colors.white.withOpacity(0.1),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              prefixIcon: Icon(Icons.search, color: Colors.white54),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              prefixIcon: const Icon(Icons.search, color: Colors.white54),
             ),
             onChanged: (text) => _onSearchChanged(),
           ),
@@ -80,12 +81,12 @@ class _SearchPageState extends State<SearchPage> {
         actions: [
           IconButton(
             onPressed: _showFilterDialog,
-            icon: Icon(Icons.filter_list_outlined),
+            icon: const Icon(Icons.filter_list_outlined),
           ),
         ],
       ),
       body: _searchTextController.text.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 'Nada encontrado...',
                 style: TextStyle(color: Colors.white, fontSize: 18),
@@ -111,7 +112,7 @@ class _SearchPageState extends State<SearchPage> {
                     } else {
                       final results = snapshot.data!;
                       if (results.isEmpty) {
-                        return Center(
+                        return const Center(
                           child: Text(
                             'Nada encontrado',
                             style: TextStyle(color: Colors.white, fontSize: 18),

@@ -12,9 +12,9 @@ class SaveFavoritesCharactersLocalDataSourceImp
       final database =
           await $FloorAppDatabase.databaseBuilder('app_database.db').build();
       CharacterDao characterDao = database.characterDao;
-      await characterDao.addCharacter(CharacterModel.fromEntity(character));
+      await characterDao.addCharacter(character);
     } catch (e) {
-      throw Exception('Falha ao carregar Favoritos!');
+      throw Exception('Falha ao Salvar Personagem!');
     }
   }
 }
