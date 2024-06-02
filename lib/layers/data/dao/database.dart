@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:dbz_app/layers/data/dao/character_dao.dart';
-import 'package:dbz_app/layers/data/dao/models/character_model.dart';
-import 'package:dbz_app/layers/data/dao/models/planet_model.dart';
 import 'package:dbz_app/layers/data/dao/planet_dao.dart';
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';

@@ -1,3 +1,4 @@
+import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/presentation/controllers/character_dao_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
@@ -12,8 +13,16 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  late Future<List<CharacterEntity>> _futureAllCharacters;
   CharacterDaoController _characterDaoController =
       GetIt.I.get<CharacterDaoController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _futureAllCharacters = _characterDaoController.getAllCharactersFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
     var sizeScreen = MediaQuery.of(context).size;
@@ -31,7 +40,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
       ),
       body: FutureBuilder(
-        future: _characterDaoController.getAllCharactersFavorites(),
+        future: _futureAllCharacters,
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -62,15 +71,25 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   ),
                   itemBuilder: (context, index) {
                     final character = snapshot.data![index];
-                    return CardCustom(
-                      item: character,
-                      function: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CharacterDatailsPage(
-                                    character: character)));
+                    return InkWell(
+                      onLongPress: () async {
+                        await _characterDaoController
+                            .deleteCharacterFavorite(character);
+                        setState(() {
+                          _futureAllCharacters = _characterDaoController
+                              .getAllCharactersFavorites();
+                        });
                       },
+                      child: CardCustom(
+                        item: character,
+                        function: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CharacterDatailsPage(
+                                      character: character)));
+                        },
+                      ),
                     );
                   },
                 );

@@ -174,6 +174,20 @@ class _$CharacterDao extends CharacterDao {
   }
 
   @override
+  Future<CharacterEntity?> findCharacterByName(String name) async {
+    return _queryAdapter.query('SELECT * FROM characters WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => CharacterEntity(
+            id: row['id'] as int,
+            name: row['name'] as String,
+            ki: row['ki'] as String,
+            race: row['race'] as String,
+            gender: row['gender'] as String,
+            description: row['description'] as String,
+            image: row['image'] as String),
+        arguments: [name]);
+  }
+
+  @override
   Future<void> addCharacter(CharacterEntity character) async {
     await _characterEntityInsertionAdapter.insert(
         character, OnConflictStrategy.replace);
@@ -228,6 +242,17 @@ class _$PlanetDao extends PlanetDao {
             name: row['name'] as String,
             description: row['description'] as String,
             image: row['image'] as String));
+  }
+
+  @override
+  Future<PlanetEntity?> findPlanetByName(String name) async {
+    return _queryAdapter.query('SELECT * FROM planets WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => PlanetEntity(
+            id: row['id'] as int,
+            name: row['name'] as String,
+            description: row['description'] as String,
+            image: row['image'] as String),
+        arguments: [name]);
   }
 
   @override

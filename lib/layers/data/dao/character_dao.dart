@@ -1,4 +1,3 @@
-import 'package:dbz_app/layers/data/dao/models/character_model.dart';
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:floor/floor.dart';
 
@@ -12,4 +11,7 @@ abstract class CharacterDao {
 
   @delete
   Future<void> removeCharacter(CharacterEntity character);
+
+  @Query('SELECT * FROM characters WHERE name = :name')
+  Future<CharacterEntity?> findCharacterByName(String name);
 }

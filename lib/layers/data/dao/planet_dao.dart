@@ -1,4 +1,3 @@
-import 'package:dbz_app/layers/data/dao/models/planet_model.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 import 'package:floor/floor.dart';
 
@@ -12,4 +11,7 @@ abstract class PlanetDao {
 
   @delete
   Future<void> removePlanet(PlanetEntity planet);
+
+  @Query('SELECT * FROM planets WHERE name = :name')
+  Future<PlanetEntity?> findPlanetByName(String name);
 }

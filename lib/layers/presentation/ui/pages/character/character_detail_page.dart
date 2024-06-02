@@ -3,7 +3,7 @@ import 'package:dbz_app/layers/presentation/controllers/character_dao_controller
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class CharacterDatailsPage extends StatelessWidget {
+class CharacterDatailsPage extends StatefulWidget {
   final CharacterEntity character;
 
   const CharacterDatailsPage({
@@ -12,9 +12,37 @@ class CharacterDatailsPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CharacterDatailsPage> createState() => _CharacterDatailsPageState();
+}
+
+class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
+  CharacterDaoController characterDaoController =
+      GetIt.I.get<CharacterDaoController>();
+  late Future<CharacterEntity?> _savedCharacterFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _savedCharacterFuture =
+        characterDaoController.findCharacterSaved(widget.character.name);
+  }
+
+  void _toggleFavorite() async {
+    final savedCharacter =
+        await characterDaoController.findCharacterSaved(widget.character.name);
+    if (savedCharacter == null) {
+      await characterDaoController.saveCharacterFavorite(widget.character);
+    } else {
+      await characterDaoController.deleteCharacterFavorite(widget.character);
+    }
+    setState(() {
+      _savedCharacterFuture =
+          characterDaoController.findCharacterSaved(widget.character.name);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    CharacterDaoController characterDaoController =
-        GetIt.I.get<CharacterDaoController>();
     var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -29,11 +57,24 @@ class CharacterDatailsPage extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              characterDaoController.saveCharacterFavorite(character);
+          FutureBuilder<CharacterEntity?>(
+            future: _savedCharacterFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              }
+
+              bool isFavorite = snapshot.data != null;
+
+              return IconButton(
+                onPressed: _toggleFavorite,
+                icon: Icon(
+                  isFavorite
+                      ? Icons.bookmark_added
+                      : Icons.bookmark_add_outlined,
+                ),
+              );
             },
-            icon: Icon(Icons.bookmark_add_outlined),
           ),
         ],
       ),
@@ -42,7 +83,7 @@ class CharacterDatailsPage extends StatelessWidget {
           // Background Image
           Positioned.fill(
             child: Image.network(
-              character.image,
+              widget.character.image,
               fit: BoxFit.contain,
             ),
           ),
@@ -71,14 +112,14 @@ class CharacterDatailsPage extends StatelessWidget {
                   // Character Image
                   Center(
                     child: Image.network(
-                      character.image,
+                      widget.character.image,
                       height: 200,
                     ),
                   ),
                   SizedBox(height: 16),
                   // Character Name
                   Text(
-                    character.name,
+                    widget.character.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 28,
@@ -106,7 +147,7 @@ class CharacterDatailsPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    character.description,
+                    widget.character.description,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
