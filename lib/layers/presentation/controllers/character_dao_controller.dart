@@ -1,5 +1,5 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
-import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character/delete_favorite_character_usecase.dart';
+import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character_usecase/delete_favorite_character_usecase.dart';
 import 'package:dbz_app/layers/domain/usecases/character/get_all_characters_saveds_usecase/get_all_characters_saveds_usecase.dart';
 import 'package:dbz_app/layers/domain/usecases/character/get_character_saved_by_name_usecase/get_character_saved_by_name_usecase.dart';
 import 'package:dbz_app/layers/domain/usecases/character/save_favorites_characters_usecase/save_favorites_characters_usecase.dart';

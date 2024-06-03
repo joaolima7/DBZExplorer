@@ -1,6 +1,6 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/repositories/character/delete_favorite_character_repository.dart';
-import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character/delete_favorite_character_usecase.dart';
+import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character_usecase/delete_favorite_character_usecase.dart';
 
 class DeleteFavoriteCharacterUseCaseImp
     implements DeleteFavoriteCharacterUseCase {

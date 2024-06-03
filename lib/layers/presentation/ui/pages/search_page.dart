@@ -2,7 +2,6 @@ import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
 import 'package:dbz_app/layers/presentation/controllers/searching_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
-import 'package:dbz_app/layers/presentation/ui/components/filter_dialog_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_detail_page.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +30,22 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void _showFilterDialog() {
-    showFilterDialogCustom(
-      context: context,
-      onSelected: (selectedOption) {
-        setState(() {
-          _filter = selectedOption;
-          _onSearchChanged();
-        });
-      },
-    );
+  void _onFilterSelected(String selectedFilter) {
+    setState(() {
+      _filter = selectedFilter;
+      _onSearchChanged();
+    });
+  }
+
+  List<dynamic> _applyFilter(List<dynamic> items) {
+    if (_filter == 'Todos') {
+      return items;
+    } else if (_filter == 'Personagens') {
+      return items.where((item) => item is CharacterEntity).toList();
+    } else if (_filter == 'Planetas') {
+      return items.where((item) => item is PlanetEntity).toList();
+    }
+    return items;
   }
 
   @override
@@ -79,9 +84,17 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: _showFilterDialog,
-            icon: const Icon(Icons.filter_list_outlined),
+          PopupMenuButton<String>(
+            icon: Icon(Icons.filter_list, color: Colors.white),
+            onSelected: _onFilterSelected,
+            itemBuilder: (BuildContext context) {
+              return ['Todos', 'Personagens', 'Planetas'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
           ),
         ],
       ),
@@ -92,7 +105,7 @@ class _SearchPageState extends State<SearchPage> {
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             )
-          : FutureBuilder(
+          : FutureBuilder<List<dynamic>>(
               future: _searchResults,
               builder: (context, snapshot) {
                 switch (snapshot.connectionState) {
@@ -110,7 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                         child: Text('ERRO ${snapshot.error.toString()}'),
                       );
                     } else {
-                      final results = snapshot.data!;
+                      final results = _applyFilter(snapshot.data!);
                       if (results.isEmpty) {
                         return const Center(
                           child: Text(

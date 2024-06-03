@@ -47,7 +47,7 @@ class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(
           'Informações do Personagem',
@@ -61,7 +61,9 @@ class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
             future: _savedCharacterFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator(
+                  color: Colors.orange,
+                );
               }
 
               bool isFavorite = snapshot.data != null;
@@ -116,11 +118,11 @@ class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
                       height: 200,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Character Name
                   Text(
                     widget.character.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -166,10 +168,10 @@ class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
     return Column(
       children: [
         Icon(icon, color: Colors.white, size: 40),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
           label,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ],
     );
