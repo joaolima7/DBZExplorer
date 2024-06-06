@@ -1,4 +1,4 @@
-import 'package:dbz_app/layers/presentation/controllers/character_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/characters/character_controller.dart';
 import 'package:get_it/get_it.dart';
 
 CharacterController _characterController = GetIt.I.get<CharacterController>();

@@ -1,4 +1,4 @@
-import 'package:dbz_app/layers/presentation/controllers/planets_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/planets/planets_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_detail_page.dart';
 

@@ -2,6 +2,8 @@ import 'package:dbz_app/layers/data/datasources/api/dbz_api/character/get_charac
 import 'package:dbz_app/layers/data/datasources/api/dbz_api/character/get_character_by_name_api_datasource_imp.dart';
 import 'package:dbz_app/layers/data/datasources/api/dbz_api/planets/get_planets_all_api_datasource_imp.dart';
 import 'package:dbz_app/layers/data/datasources/api/dbz_api/planets/get_planets_by_name_api_datasource_imp.dart';
+import 'package:dbz_app/layers/data/datasources/api/dbz_api/transformations/get_transformations_all_api_datasource_imp.dart';
+import 'package:dbz_app/layers/data/datasources/api/dbz_api/transformations/get_transformations_by_name_api_datasource_imp.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/delete_favorite_character_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/get_all_characters_saveds_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/character_datasource/get_character_all_datasource.dart';
@@ -22,6 +24,8 @@ import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planet_sa
 import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_all_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/planets_datasource/get_planets_by_name_datasource.dart';
 import 'package:dbz_app/layers/data/datasources/planets_datasource/save_favorites_planets_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/transformations_datasource/get_transformations_all_datasource.dart';
+import 'package:dbz_app/layers/data/datasources/transformations_datasource/get_transformations_by_name_datasource.dart';
 import 'package:dbz_app/layers/data/repositories/character/delete_favorite_character_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/character/get_all_characters_saveds_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/character/get_character_all_repository_imp.dart';
@@ -34,6 +38,8 @@ import 'package:dbz_app/layers/data/repositories/planets/get_planet_saved_by_nam
 import 'package:dbz_app/layers/data/repositories/planets/get_planets_all_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/planets/get_planets_by_name_repository_imp.dart';
 import 'package:dbz_app/layers/data/repositories/planets/save_favorites_planets_repository_imp.dart';
+import 'package:dbz_app/layers/data/repositories/transformations/get_transformations_all_repository_imp.dart';
+import 'package:dbz_app/layers/data/repositories/transformations/get_transformations_by_name_repository_imp.dart';
 import 'package:dbz_app/layers/domain/repositories/character/delete_favorite_character_repository.dart';
 import 'package:dbz_app/layers/domain/repositories/character/get_all_characters_saveds_repository.dart';
 import 'package:dbz_app/layers/domain/repositories/character/get_character_all_repository.dart';
@@ -46,6 +52,8 @@ import 'package:dbz_app/layers/domain/repositories/planets/get_planet_saved_by_n
 import 'package:dbz_app/layers/domain/repositories/planets/get_planets_all_repository.dart';
 import 'package:dbz_app/layers/domain/repositories/planets/get_planets_by_name_repository.dart';
 import 'package:dbz_app/layers/domain/repositories/planets/save_favorites_planets_repository.dart';
+import 'package:dbz_app/layers/domain/repositories/transformations/get_transformations_all_repository.dart';
+import 'package:dbz_app/layers/domain/repositories/transformations/get_transformations_by_name_repository.dart';
 import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character_usecase/delete_favorite_character_usecase.dart';
 import 'package:dbz_app/layers/domain/usecases/character/delete_favorite_character_usecase/delete_favorite_character_usecase_imp.dart';
 import 'package:dbz_app/layers/domain/usecases/character/get_all_characters_saveds_usecase/get_all_characters_saveds_usecase.dart';
@@ -70,11 +78,16 @@ import 'package:dbz_app/layers/domain/usecases/planets/get_planets_by_name_useca
 import 'package:dbz_app/layers/domain/usecases/planets/get_planets_by_name_usecase/get_planets_by_name_usecase_imp.dart';
 import 'package:dbz_app/layers/domain/usecases/planets/save_favorites_planets_usecase/save_favorites_planets_usecase.dart';
 import 'package:dbz_app/layers/domain/usecases/planets/save_favorites_planets_usecase/save_favorites_planets_usecase_imp.dart';
-import 'package:dbz_app/layers/presentation/controllers/character_controller.dart';
-import 'package:dbz_app/layers/presentation/controllers/character_dao_controller.dart';
-import 'package:dbz_app/layers/presentation/controllers/planet_dao_controller.dart';
-import 'package:dbz_app/layers/presentation/controllers/planets_controller.dart';
+import 'package:dbz_app/layers/domain/usecases/transformations/get_transformations_all_usecase/get_transformations_all_usecase.dart';
+import 'package:dbz_app/layers/domain/usecases/transformations/get_transformations_all_usecase/get_transformations_all_usecase_imp.dart';
+import 'package:dbz_app/layers/domain/usecases/transformations/get_transformations_by_name_usecase/get_transformations_by_name_usecase.dart';
+import 'package:dbz_app/layers/domain/usecases/transformations/get_transformations_by_name_usecase/get_transformations_by_name_usecase_imp.dart';
+import 'package:dbz_app/layers/presentation/controllers/characters/character_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/characters/character_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/planets/planet_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/planets/planets_controller.dart';
 import 'package:dbz_app/layers/presentation/controllers/searching_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/transformations/transformations_controller.dart';
 import 'package:get_it/get_it.dart';
 
 class Inject {
@@ -93,6 +106,12 @@ class Inject {
 
     getIt.registerLazySingleton<GetCharacterSavedByNameDataSource>(
         () => GetCharacterSavedByNameLocalDataSourceImp());
+
+    getIt.registerLazySingleton<GetTransformationsAllDataSource>(
+        () => GetTransformationsAllApiDataSourceImp());
+
+    getIt.registerLazySingleton<GetTransformationsByNameDataSource>(
+        () => GetTransformationsByNameApiDataSourceImp());
 
     getIt.registerLazySingleton<DeleteFavoriteCharacterDataSource>(
         () => DeleteFavoriteCharacterLocalDataSourceImp());
@@ -131,6 +150,12 @@ class Inject {
     getIt.registerLazySingleton<GetCharacterSavedByNameRepository>(
         () => GetCharacterSavedByNameRepositoryImp(getIt()));
 
+    getIt.registerLazySingleton<GetTransformationsAllRepository>(
+        () => GetTransformationsAllRepositoryImp(getIt()));
+
+    getIt.registerLazySingleton<GetTransformationsByNameRepository>(
+        () => GetTransformationsByNameRepositoryImp(getIt()));
+
     getIt.registerLazySingleton<DeleteFavoriteCharacterRepository>(
         () => DeleteFavoriteCharacterRepositoryImp(getIt()));
 
@@ -167,6 +192,12 @@ class Inject {
 
     getIt.registerLazySingleton<GetCharacterSavedByNameUseCase>(
         () => GetCharacterSavedByNameUseCaseImp(getIt()));
+
+    getIt.registerLazySingleton<GetTransformationsAllUseCase>(
+        () => GetTranformationsAllUseCaseImp(getIt()));
+
+    getIt.registerLazySingleton<GetTransformationsByNameUseCase>(
+        () => GetTransformationsByNameUseCaseImp(getIt()));
 
     getIt.registerLazySingleton<DeleteFavoriteCharacterUseCase>(
         () => DeleteFavoriteCharacterUseCaseImp(getIt()));
@@ -221,5 +252,11 @@ class Inject {
           getIt(),
           getIt(),
         ));
+
+    getIt.registerFactory<TransformationsController>(
+        () => TransformationsController(
+              getIt(),
+              getIt(),
+            ));
   }
 }

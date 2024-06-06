@@ -2,6 +2,7 @@ import 'package:dbz_app/layers/core/utils/consts/interface_contents_consts.dart'
 import 'package:dbz_app/layers/presentation/ui/components/text_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_result_page.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_result_page.dart';
+import 'package:dbz_app/layers/presentation/ui/pages/transformations/transformations_result_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,6 +75,13 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PlanetaResultPage()));
+                          }
+                          if (index == 2) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TransformationResultPage()));
                           }
                         },
                         trailing:

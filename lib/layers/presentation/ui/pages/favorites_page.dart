@@ -1,7 +1,7 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
-import 'package:dbz_app/layers/presentation/controllers/character_dao_controller.dart';
-import 'package:dbz_app/layers/presentation/controllers/planet_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/characters/character_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/planets/planet_dao_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_detail_page.dart';
@@ -72,7 +72,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
         actions: [
           PopupMenuButton<String>(
-            icon: Icon(Icons.filter_list, color: Colors.white),
+            icon: const Icon(Icons.filter_list, color: Colors.white),
             onSelected: _onFilterSelected,
             itemBuilder: (BuildContext context) {
               return ['Todos', 'Personagens', 'Planetas'].map((String choice) {

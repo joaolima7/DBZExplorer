@@ -1,5 +1,6 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
+import 'package:dbz_app/layers/domain/entities/transformation_entity.dart';
 import 'package:flutter/material.dart';
 
 class CardCustom extends StatelessWidget {
@@ -23,6 +24,10 @@ class CardCustom extends StatelessWidget {
       name = item.name;
       number = '#${item.id}';
     } else if (item is PlanetEntity) {
+      imageUrl = item.image;
+      name = item.name;
+      number = '#${item.id}';
+    } else if (item is TransformationEntity) {
       imageUrl = item.image;
       name = item.name;
       number = '#${item.id}';
@@ -70,12 +75,17 @@ class CardCustom extends StatelessWidget {
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, exception, stackTrace) {
+                    return Image.network(
+                        'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png');
+                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   name,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

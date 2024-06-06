@@ -1,5 +1,5 @@
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
-import 'package:dbz_app/layers/presentation/controllers/planet_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/planets/planet_dao_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

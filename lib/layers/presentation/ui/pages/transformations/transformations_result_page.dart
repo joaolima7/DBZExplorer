@@ -1,30 +1,32 @@
-import 'package:dbz_app/layers/presentation/controllers/characters/character_controller.dart';
+import 'package:dbz_app/layers/domain/entities/transformation_entity.dart';
+import 'package:dbz_app/layers/presentation/controllers/transformations/transformations_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
-import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
+import 'package:dbz_app/layers/presentation/ui/pages/transformations/transformations_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class CharacterResultPage extends StatefulWidget {
-  CharacterResultPage({
-    super.key,
-  });
+class TransformationResultPage extends StatefulWidget {
+  TransformationResultPage({super.key});
 
   @override
-  State<CharacterResultPage> createState() => _ResultPageState();
+  State<TransformationResultPage> createState() =>
+      _TransformationResultPageState();
 }
 
-class _ResultPageState extends State<CharacterResultPage> {
-  CharacterController _characterController = GetIt.I.get<CharacterController>();
+class _TransformationResultPageState extends State<TransformationResultPage> {
+  TransformationsController _transformationController =
+      GetIt.I.get<TransformationsController>();
+
   @override
   Widget build(BuildContext context) {
     var sizeScreen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(
-          'Personagens',
+          'Transformações',
           style: TextStyle(
             color: Colors.white,
             fontSize: sizeScreen.width / 1.8 * .1,
@@ -32,7 +34,7 @@ class _ResultPageState extends State<CharacterResultPage> {
         ),
       ),
       body: FutureBuilder(
-        future: _characterController.getAllCharacters(),
+        future: _transformationController.getAllTransformations(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -47,8 +49,8 @@ class _ResultPageState extends State<CharacterResultPage> {
 
             case ConnectionState.done:
               if (snapshot.hasError) {
-                return const Center(
-                  child: Text('ERRO'),
+                return Center(
+                  child: Text('ERRO ${snapshot.error.toString()}'),
                 );
               } else {
                 return GridView.builder(
@@ -59,15 +61,18 @@ class _ResultPageState extends State<CharacterResultPage> {
                     crossAxisSpacing: 10,
                   ),
                   itemBuilder: (context, index) {
-                    final character = snapshot.data![index];
+                    final transformation = snapshot.data![index];
                     return CardCustom(
-                      item: character,
+                      item: transformation,
                       function: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CharacterDatailsPage(
-                                    character: character)));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TransformationDetailPage(
+                              transformation: transformation,
+                            ),
+                          ),
+                        );
                       },
                     );
                   },
