@@ -1,9 +1,11 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
+import 'package:dbz_app/layers/domain/entities/transformation_entity.dart';
 import 'package:dbz_app/layers/presentation/controllers/searching_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_detail_page.dart';
+import 'package:dbz_app/layers/presentation/ui/pages/transformations/transformations_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -159,6 +161,15 @@ class _SearchPageState extends State<SearchPage> {
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         PlanetsDetailPage(planet: item),
+                                  ),
+                                );
+                              } else if (item is TransformationEntity) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TransformationDetailPage(
+                                            transformation: item),
                                   ),
                                 );
                               }

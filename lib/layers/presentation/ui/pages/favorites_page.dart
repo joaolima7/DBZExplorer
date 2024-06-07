@@ -1,10 +1,13 @@
 import 'package:dbz_app/layers/domain/entities/character_entity.dart';
 import 'package:dbz_app/layers/domain/entities/planet_entity.dart';
+import 'package:dbz_app/layers/domain/entities/transformation_entity.dart';
 import 'package:dbz_app/layers/presentation/controllers/characters/character_dao_controller.dart';
 import 'package:dbz_app/layers/presentation/controllers/planets/planet_dao_controller.dart';
+import 'package:dbz_app/layers/presentation/controllers/transformations/transformations_dao_controller.dart';
 import 'package:dbz_app/layers/presentation/ui/components/card_custom.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/character/character_detail_page.dart';
 import 'package:dbz_app/layers/presentation/ui/pages/planets/planets_detail_page.dart';
+import 'package:dbz_app/layers/presentation/ui/pages/transformations/transformations_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +24,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
       GetIt.I.get<CharacterDaoController>();
   final PlanetDaoController _planetDaoController =
       GetIt.I.get<PlanetDaoController>();
+  final TransformationsDaoController _transformationsDaoController =
+      GetIt.I.get<TransformationsDaoController>();
 
   String _selectedFilter = 'Todos';
 
@@ -34,7 +39,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
     final characters =
         await _characterDaoController.getAllCharactersFavorites();
     final planets = await _planetDaoController.getAllPlanetsFavorites();
-    return [...characters, ...planets];
+    final transformations =
+        await _transformationsDaoController.getAllTransformations();
+    return [...characters, ...planets, ...transformations];
   }
 
   List<dynamic> _applyFilter(List<dynamic> items) {
@@ -44,6 +51,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
       return items.where((item) => item is CharacterEntity).toList();
     } else if (_selectedFilter == 'Planetas') {
       return items.where((item) => item is PlanetEntity).toList();
+    } else if (_selectedFilter == 'Tranformações') {
+      return items.where((item) => item is TransformationEntity).toList();
     }
     return items;
   }
@@ -131,6 +140,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               .deleteCharacterFavorite(item);
                         } else if (item is PlanetEntity) {
                           await _planetDaoController.deletePlanetFavorite(item);
+                        } else if (item is TransformationEntity) {
+                          await _transformationsDaoController
+                              .deleteTransformation(item);
                         }
                         setState(() {
                           _futureAllFavorites = _getAllFavorites();
@@ -153,6 +165,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               MaterialPageRoute(
                                 builder: (context) =>
                                     PlanetsDetailPage(planet: item),
+                              ),
+                            );
+                          } else if (item is TransformationEntity) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransformationDetailPage(
+                                    transformation: item),
                               ),
                             );
                           }

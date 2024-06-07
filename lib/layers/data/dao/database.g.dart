@@ -76,6 +76,8 @@ class _$AppDatabase extends AppDatabase {
 
   PlanetDao? _planetDaoInstance;
 
+  TransformationDao? _transformationDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -101,6 +103,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `characters` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `ki` TEXT NOT NULL, `race` TEXT NOT NULL, `gender` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `planets` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `image` TEXT NOT NULL)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `transformations` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `ki` TEXT NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -116,6 +120,12 @@ class _$AppDatabase extends AppDatabase {
   @override
   PlanetDao get planetDao {
     return _planetDaoInstance ??= _$PlanetDao(database, changeListener);
+  }
+
+  @override
+  TransformationDao get transformationDao {
+    return _transformationDaoInstance ??=
+        _$TransformationDao(database, changeListener);
   }
 }
 
@@ -264,5 +274,76 @@ class _$PlanetDao extends PlanetDao {
   @override
   Future<void> removePlanet(PlanetEntity planet) async {
     await _planetEntityDeletionAdapter.delete(planet);
+  }
+}
+
+class _$TransformationDao extends TransformationDao {
+  _$TransformationDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _transformationEntityInsertionAdapter = InsertionAdapter(
+            database,
+            'transformations',
+            (TransformationEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'image': item.image,
+                  'ki': item.ki
+                }),
+        _transformationEntityDeletionAdapter = DeletionAdapter(
+            database,
+            'transformations',
+            ['id'],
+            (TransformationEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'image': item.image,
+                  'ki': item.ki
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<TransformationEntity>
+      _transformationEntityInsertionAdapter;
+
+  final DeletionAdapter<TransformationEntity>
+      _transformationEntityDeletionAdapter;
+
+  @override
+  Future<List<TransformationEntity>> getAllTransformations() async {
+    return _queryAdapter.queryList('SELECT * FROM transformations',
+        mapper: (Map<String, Object?> row) => TransformationEntity(
+            id: row['id'] as int,
+            name: row['name'] as String,
+            image: row['image'] as String,
+            ki: row['ki'] as String));
+  }
+
+  @override
+  Future<TransformationEntity?> findTransformationByName(String name) async {
+    return _queryAdapter.query('SELECT * FROM transformations WHERE name = ?1',
+        mapper: (Map<String, Object?> row) => TransformationEntity(
+            id: row['id'] as int,
+            name: row['name'] as String,
+            image: row['image'] as String,
+            ki: row['ki'] as String),
+        arguments: [name]);
+  }
+
+  @override
+  Future<void> addTransformations(TransformationEntity transformation) async {
+    await _transformationEntityInsertionAdapter.insert(
+        transformation, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<void> removeTransformations(
+      TransformationEntity transformation) async {
+    await _transformationEntityDeletionAdapter.delete(transformation);
   }
 }
