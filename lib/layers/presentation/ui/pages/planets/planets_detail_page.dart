@@ -86,6 +86,10 @@ class _PlanetsDetailPageState extends State<PlanetsDetailPage> {
             child: Image.network(
               widget.planet.image,
               fit: BoxFit.contain,
+              errorBuilder: (context, obj, stackTrace) {
+                return Image.network(
+                    'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png');
+              },
             ),
           ),
           // Content with Transparency
@@ -115,6 +119,10 @@ class _PlanetsDetailPageState extends State<PlanetsDetailPage> {
                     child: Image.network(
                       widget.planet.image,
                       height: 200,
+                      errorBuilder: (context, obj, stackTrace) {
+                        return Image.network(
+                            'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png');
+                      },
                     ),
                   ),
                   const SizedBox(height: 16),

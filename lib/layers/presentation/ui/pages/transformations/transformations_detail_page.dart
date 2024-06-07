@@ -93,6 +93,10 @@ class _TransformationDetailPageState extends State<TransformationDetailPage> {
                 fit: BoxFit.contain,
                 color: Colors.black.withOpacity(0.5),
                 colorBlendMode: BlendMode.darken,
+                errorBuilder: (context, obj, stackTrace) {
+                  return Image.network(
+                      'https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png');
+                },
               ),
             ),
           ),

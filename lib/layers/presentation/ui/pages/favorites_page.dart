@@ -51,7 +51,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       return items.where((item) => item is CharacterEntity).toList();
     } else if (_selectedFilter == 'Planetas') {
       return items.where((item) => item is PlanetEntity).toList();
-    } else if (_selectedFilter == 'Tranformações') {
+    } else if (_selectedFilter == 'Transformações') {
       return items.where((item) => item is TransformationEntity).toList();
     }
     return items;
@@ -84,7 +84,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
             icon: const Icon(Icons.filter_list, color: Colors.white),
             onSelected: _onFilterSelected,
             itemBuilder: (BuildContext context) {
-              return ['Todos', 'Personagens', 'Planetas'].map((String choice) {
+              return ['Todos', 'Personagens', 'Planetas', 'Transformações']
+                  .map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),

@@ -46,6 +46,8 @@ class _SearchPageState extends State<SearchPage> {
       return items.where((item) => item is CharacterEntity).toList();
     } else if (_filter == 'Planetas') {
       return items.where((item) => item is PlanetEntity).toList();
+    } else if (_filter == 'Transformações') {
+      return items.where((item) => item is TransformationEntity).toList();
     }
     return items;
   }
@@ -90,7 +92,8 @@ class _SearchPageState extends State<SearchPage> {
             icon: Icon(Icons.filter_list, color: Colors.white),
             onSelected: _onFilterSelected,
             itemBuilder: (BuildContext context) {
-              return ['Todos', 'Personagens', 'Planetas'].map((String choice) {
+              return ['Todos', 'Personagens', 'Planetas', 'Transformações']
+                  .map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
