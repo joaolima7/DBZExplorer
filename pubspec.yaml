@@ -21,11 +21,20 @@ dependencies:
   get_it: ^7.7.0
   floor: ^1.5.0
   sqflite: ^2.3.3+1
+  flutter_native_splash: ^2.4.0
+  
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  image_path: "assets/assets_app/icon_app.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/assets_app/icon_not_background.png"   
 
 
   flutter_lints: ^3.0.0
@@ -40,4 +49,10 @@ flutter:
 
   assets:
     - assets/images/
+
+flutter_native_splash:
+  image: "assets/assets_app/icon_app.png"
+  color: "#000000"
+  android: true
+  ios: true
   

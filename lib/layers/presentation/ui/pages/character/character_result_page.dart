@@ -21,6 +21,7 @@ class _ResultPageState extends State<CharacterResultPage> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(

@@ -23,6 +23,7 @@ class _TransformationResultPageState extends State<TransformationResultPage> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(

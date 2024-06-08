@@ -47,6 +47,7 @@ class _CharacterDatailsPageState extends State<CharacterDatailsPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Colors.transparent,
         title: Text(
